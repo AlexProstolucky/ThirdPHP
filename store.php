@@ -1,18 +1,14 @@
 <?php
-// Почати сесію
 session_start();
-// Функція для додавання товару до кошика
+
 function addToCart($name, $price, $image) {
-    // Перевірити, чи існує кошик у сесії, якщо ні - створити новий
     if (!isset($_SESSION['cart'])) {
         $_SESSION['cart'] = [];
     }
 
-    // Додати товар до кошика
     $_SESSION['cart'][] = ['name' => $name, 'price' => $price, 'image' => $image];
 }
 
-// Функція для обчислення загальної ціни товарів у кошику
 function calculateTotalPrice() {
     $totalPrice = 0;
     if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
@@ -23,9 +19,7 @@ function calculateTotalPrice() {
     return $totalPrice;
 }
 function displayCart() {
-    // Перевіряємо, чи існує масив $_SESSION['cart'] і чи він не є null
     if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
-        // Вміст кошика
         echo "<h2>Кошик: ". calculateTotalPrice()."</h2>";
         if (!empty($_SESSION['cart'])) {
             echo "<div style='display: flex; flex-wrap: wrap;'>";
@@ -43,16 +37,13 @@ function displayCart() {
         echo "<h2>Кошик порожній</h2>";
     }
 }
-// Перевірити, чи натиснута кнопка "Купити"
 if (isset($_POST['buy'])) {
-    // Отримати дані про товар з кнопки "Купити", яку натиснув користувач
     $name = $_POST['name'];
     $price = $_POST['price'];
     $image = $_POST['image'];
     addToCart($name, $price, $image);
 }
 
-// Функція для відображення кнопки "Купити" для товару
 function displayProduct($name, $image, $price) {
     echo "<div>";
     echo "<h2>$name</h2>";
@@ -81,9 +72,7 @@ function displayProduct($name, $image, $price) {
 
 <h1>Кошик</h1>
 
-<!-- Вивід кнопок "Купити" для товарів -->
 <?php
-// Приклад використання функції displayProduct для кожного товару
 displayProduct('Продукт 1', '/iamges/pink-1.jpg', 100);
 displayProduct('Продукт 2', '/iamges/pink-1.jpg', 150);
 ?>
